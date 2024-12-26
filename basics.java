@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class basics
 {
     public static class Node
@@ -55,7 +58,25 @@ public class basics
         nthLevel(root.left,n-1);
         nthLevel(root.right,n-1);
     }
-    public static int size(Node root)
+    public static void bfs(Node root) //iterative
+    {
+        System.out.print("bfs traversal is:");
+        Queue<Node> q=new LinkedList<>();
+        if(root!=null)
+        q.add(root);
+        while(q.size()>0)
+        {
+            Node temp=q.peek();
+            if(temp.left!=null)
+            q.add(temp.left);
+            if(temp.right!=null)
+            q.add(temp.right);
+
+            System.out.print(temp.data+" ");
+            q.remove();
+        }
+    }
+    public static int size(Node root) //number of nodes
     {
         if(root==null)
         return 0;
@@ -84,10 +105,10 @@ public class basics
     }
     public static int height(Node root)
     {
-        if(root==null) 
+        if(root==null)
         return 0;
 
-        if(root!=null && root.left==null && root.right==null)
+        if(root!=null && root.left==null && root.right==null) //leaf node
         return 0;
 
         return 1+Math.max(height(root.left),height(root.right));
@@ -130,11 +151,11 @@ public class basics
         System.out.println("height of the tree is: "+height(root));
         System.out.println("Printing Nodes at each level:");
         int level=height(root)+1; //number of levels in tree is always 1 more than it's height
-        for(int i=1;i<=level;i++)
+        for(int i=1;i<=level;i++) //level order
         {
             nthLevel(root, i);//every iteration assume we are printing nodes at 'i'th  level
             System.out.println(); 
         } //T.C => O(N*LOG(N))
-
+        bfs(root);
     }
 }
